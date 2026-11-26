@@ -1,0 +1,228 @@
+/* ==========================================================================
+   SISTEMA RESPONSIVE MOBILE-FIRST (CLAMP + GRID/FLEX + SAFE-AREA)
+   Conserva textos, precios, colores, imágenes y estructura del formulario.
+   ========================================================================== */
+
+:root {
+  --sp-4: 0.25rem;   /* 4px */
+  --sp-8: 0.5rem;    /* 8px */
+  --sp-16: 1rem;     /* 16px */
+  --sp-24: 1.5rem;   /* 24px */
+  --sp-32: 2rem;     /* 32px */
+  --sp-48: 3rem;     /* 48px */
+  --sp-64: 4rem;     /* 64px */
+  --container-max: 1200px;
+}
+
+/* Reset básico y box-sizing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Evita desbordes por palabras largas en 320px o con zoom / texto ampliado */
+h1, h2, h3, p, span, a, label, summary, button {
+  overflow-wrap: break-word;
+}
+
+/* Foco de teclado claramente visible en todos los fondos */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid #F59E0B;
+  outline-offset: 2px;
+}
+
+/* Contenedor máximo centrado en pantallas grandes (1280px a 3440px) */
+.max-w-6xl {
+  max-width: min(var(--container-max), 100%);
+  margin-inline: auto;
+}
+
+/* Tipografía fluida con clamp() */
+header.hero-gradient h1 {
+  font-size: clamp(1.45rem, 3.8vw + 0.65rem, 3.25rem);
+  line-height: 1.12;
+}
+
+header.hero-gradient .text-4xl {
+  font-size: clamp(1.85rem, 3.6vw + 0.75rem, 3rem);
+  line-height: 1.05;
+}
+
+section h2 {
+  font-size: clamp(1.35rem, 2.4vw + 0.65rem, 2.25rem);
+  line-height: 1.18;
+}
+
+/* Imágenes y SVGs proporcionados sin deformación */
+img,
+svg,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ---- ESTILOS BASE MOBILE-FIRST ---- */
+
+/* Barra superior y contador adaptables desde 320px y con texto ampliado */
+.sticky.top-0 {
+  padding-block: var(--sp-8);
+  padding-inline: max(var(--sp-16), env(safe-area-inset-left, 0px)) max(var(--sp-16), env(safe-area-inset-right, 0px));
+}
+
+.sticky.top-0 [aria-label="Tiempo restante de la promoción"] {
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(var(--sp-4), 1vw, var(--sp-8));
+  font-size: clamp(0.72rem, 2.2vw, 0.875rem);
+}
+
+/* Hero fluido (permite crecer al contenido) */
+header.hero-gradient {
+  padding-top: var(--sp-24);
+  padding-bottom: var(--sp-48);
+}
+
+/* Sello circular 4x3 contenido sin salirse del borde derecho en 320px */
+header .relative > .gold-badge-gradient.rounded-full {
+  top: -0.5rem;
+  right: 0.25rem;
+  width: clamp(4.25rem, 18vw, 6.5rem);
+  height: clamp(4.25rem, 18vw, 6.5rem);
+}
+
+/* Sellos de confianza bajo la imagen del hero */
+header .grid.grid-cols-3 {
+  gap: clamp(var(--sp-4), 1.5vw, var(--sp-8));
+}
+
+/* Grillas adaptables (4 -> 2 -> 1 columna natural) */
+section[aria-label="Beneficios de la promoción"] .grid,
+section[aria-label="Contenido del paquete"] .grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: clamp(var(--sp-16), 2vw, var(--sp-24));
+}
+
+#caracteristicas .lg\:col-span-7.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+  gap: clamp(var(--sp-16), 2vw, var(--sp-24));
+}
+
+/* Formulario: ancho completo, mínimo 48px de alto y >= 16px para evitar zoom en iOS */
+#checkout-form input:not([type="hidden"]),
+#checkout-form select {
+  width: 100%;
+  min-height: 48px;
+  font-size: max(1rem, 16px);
+}
+
+#submit-btn {
+  min-height: 52px;
+  font-size: clamp(0.9rem, 3.2vw, 1.125rem);
+  padding-inline: clamp(var(--sp-16), 3vw, var(--sp-24));
+}
+
+/* Controles táctiles mínimos de 44x44 px */
+button,
+[type="submit"],
+summary,
+a[href="#formulario-pedido"],
+#whatsapp-float {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+/* Barra fija inferior en móvil con safe-area */
+#mobile-sticky-cta {
+  padding: var(--sp-8) max(var(--sp-16), env(safe-area-inset-right, 0px)) calc(var(--sp-8) + env(safe-area-inset-bottom, 0px)) max(var(--sp-16), env(safe-area-inset-left, 0px));
+  gap: var(--sp-8);
+}
+
+#mobile-sticky-cta a {
+  font-size: clamp(0.75rem, 3vw, 0.875rem);
+  padding: clamp(0.6rem, 2vw, 0.75rem) clamp(0.75rem, 3vw, 1.25rem);
+}
+
+/* Botón flotante de WhatsApp por encima de la barra móvil sin tapar campos */
+#whatsapp-float {
+  bottom: calc(4.85rem + env(safe-area-inset-bottom, 0px));
+  right: max(var(--sp-16), env(safe-area-inset-right, 0px));
+}
+
+/* Footer con margen inferior suficiente para barras fijas en móvil */
+footer {
+  padding-bottom: calc(var(--sp-64) + 2rem + env(safe-area-inset-bottom, 0px));
+}
+
+/* Modales adaptables sin desbordar */
+dialog {
+  width: min(94vw, 32rem);
+  max-width: 94vw;
+  max-height: 88dvh;
+  overflow-y: auto;
+}
+
+/* ---- TABLET Y ESCRITORIO (MOBILE-FIRST: >= 640px) ---- */
+@media (min-width: 640px) {
+  .sticky.top-0 {
+    padding-block: 0.625rem;
+  }
+
+  #whatsapp-float {
+    bottom: max(var(--sp-24), env(safe-area-inset-bottom, 0px));
+    right: max(var(--sp-24), env(safe-area-inset-right, 0px));
+  }
+
+  footer {
+    padding-bottom: var(--sp-32);
+  }
+}
+
+/* ---- ESCRITORIO (>= 1024px) ---- */
+@media (min-width: 1024px) {
+  header.hero-gradient {
+    min-height: clamp(32rem, 78dvh, 48rem);
+    display: flex;
+    align-items: center;
+    padding-block: var(--sp-64);
+  }
+}
+
+/* ---- ROTACIÓN HORIZONTAL EN CELULAR / VENTANAS ANCHAS PERO BAJAS ---- */
+@media (max-height: 500px) and (orientation: landscape) {
+  .sticky.top-0 {
+    position: static;
+  }
+
+  header.hero-gradient {
+    min-height: auto;
+    padding-block: var(--sp-24);
+  }
+
+  #mobile-sticky-cta {
+    display: none;
+  }
+
+  #whatsapp-float {
+    bottom: max(var(--sp-16), env(safe-area-inset-bottom, 0px));
+    right: max(var(--sp-16), env(safe-area-inset-right, 0px));
+  }
+
+  footer {
+    padding-bottom: var(--sp-32);
+  }
+
+  dialog {
+    max-height: 92dvh;
+  }
+}
