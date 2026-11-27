@@ -85,10 +85,32 @@ video {
   font-size: clamp(0.72rem, 2.2vw, 0.875rem);
 }
 
-/* Hero fluido (permite crecer al contenido) */
+/* Hero fluido (permite crecer al contenido y mantiene espacios proporcionales) */
 header.hero-gradient {
-  padding-top: var(--sp-24);
-  padding-bottom: var(--sp-48);
+  padding-top: clamp(1.25rem, 3.5vw, 3.5rem);
+  padding-bottom: clamp(2.25rem, 5vw, 4rem);
+}
+
+/* Títulos superiores del Hero (cobertura + contraentrega) con tamaño y espaciado fluidos */
+.hero-top-titles {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(0.5rem, 1.4vw, 0.9rem);
+  margin-bottom: clamp(1rem, 2.5vw, 2rem);
+}
+
+.hero-coverage-badge {
+  font-size: clamp(0.82rem, 1.3vw + 0.55rem, 1.35rem);
+  line-height: 1.3;
+  padding: clamp(0.45rem, 1vw, 0.75rem) clamp(0.95rem, 2.6vw, 1.85rem);
+  max-width: 100%;
+}
+
+.hero-cod-badge {
+  font-size: clamp(0.9rem, 1.4vw + 0.58rem, 1.4rem);
+  line-height: 1.25;
+  padding: clamp(0.45rem, 1vw, 0.7rem) clamp(1.15rem, 2.8vw, 2rem);
 }
 
 /* Sello circular 4x3 contenido sin salirse del borde derecho en 320px */
@@ -112,7 +134,7 @@ section[aria-label="Contenido del paquete"] .grid {
   gap: clamp(var(--sp-16), 2vw, var(--sp-24));
 }
 
-#caracteristicas .lg\:col-span-7.grid {
+.camera-benefits-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
   gap: clamp(var(--sp-16), 2vw, var(--sp-24));
